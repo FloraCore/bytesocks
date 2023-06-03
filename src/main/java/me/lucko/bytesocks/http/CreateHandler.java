@@ -42,7 +42,9 @@ import javax.annotation.Nonnull;
 
 public final class CreateHandler implements Route.Handler {
 
-    /** Logger instance */
+    /**
+     * Logger instance
+     */
     private static final Logger LOGGER = LogManager.getLogger(CreateHandler.class);
 
     private final ChannelRegistry channelRegistry;

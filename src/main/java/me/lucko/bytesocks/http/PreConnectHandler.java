@@ -43,7 +43,9 @@ import javax.annotation.Nonnull;
 
 public class PreConnectHandler implements Route.Before {
 
-    /** Logger instance */
+    /**
+     * Logger instance
+     */
     private static final Logger LOGGER = LogManager.getLogger(PreConnectHandler.class);
 
     private final ChannelRegistry channelRegistry;

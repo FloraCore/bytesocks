@@ -50,10 +50,14 @@ public class ChannelRegistry {
     private final Map<String, Channel> channelsById = new ConcurrentHashMap<>();
     private final Multimap<String, Channel> channelsByCreatorIpAddress = Multimaps.synchronizedSetMultimap(HashMultimap.create());
 
-    /** The rate limiter used to limit sending messages to a channel */
+    /**
+     * The rate limiter used to limit sending messages to a channel
+     */
     private final RateLimiter sendRateLimiter;
 
-    /** Max clients that connect to a channel */
+    /**
+     * Max clients that connect to a channel
+     */
     private final int channelMaxClients;
 
     public ChannelRegistry(RateLimiter sendRateLimiter, int channelMaxClients) {

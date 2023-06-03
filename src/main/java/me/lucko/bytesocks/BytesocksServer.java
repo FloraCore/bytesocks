@@ -51,7 +51,9 @@ import java.util.concurrent.CompletionException;
 
 public class BytesocksServer extends Jooby {
 
-    /** Logger instance */
+    /**
+     * Logger instance
+     */
     private static final Logger LOGGER = LogManager.getLogger(BytesocksServer.class);
 
     public BytesocksServer(String host, int port, boolean metrics, ChannelRegistry channelRegistry, int createRateLimit, RateLimiter connectRateLimiter, TokenGenerator tokenGenerator) {

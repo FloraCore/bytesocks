@@ -26,7 +26,8 @@
 package me.lucko.bytesocks.util;
 
 public final class EnvVars {
-    private EnvVars() {}
+    private EnvVars() {
+    }
 
     /**
      * Uses environment variables to configure some internal system properties

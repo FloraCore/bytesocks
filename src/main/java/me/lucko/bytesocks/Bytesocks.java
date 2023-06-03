@@ -53,7 +53,9 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Bytesocks implements AutoCloseable {
 
-    /** Logger instance */
+    /**
+     * Logger instance
+     */
     private static final Logger LOGGER;
 
     static {
@@ -61,21 +63,10 @@ public final class Bytesocks implements AutoCloseable {
         LOGGER = LogManager.getLogger(Bytesocks.class);
     }
 
-    // Bootstrap
-    public static void main(String[] args) throws Exception {
-        // setup logging
-        System.setOut(IoBuilder.forLogger(LOGGER).setLevel(Level.INFO).buildPrintStream());
-        System.setErr(IoBuilder.forLogger(LOGGER).setLevel(Level.ERROR).buildPrintStream());
-
-        // setup a new bytesocks instance
-        Configuration config = Configuration.load(Paths.get("config.json"));
-        Bytesocks bytesocks = new Bytesocks(config);
-        Runtime.getRuntime().addShutdownHook(new Thread(bytesocks::close, "Bytesocks Shutdown Thread"));
-    }
-
     private final ChannelRegistry channelRegistry;
-
-    /** The web server instance */
+    /**
+     * The web server instance
+     */
     private final BytesocksServer server;
 
     public Bytesocks(Configuration config) {
@@ -85,9 +76,9 @@ public final class Bytesocks implements AutoCloseable {
         // setup channels
         this.channelRegistry = new ChannelRegistry(
                 new RateLimiter(
-                    // by default, allow messages at a rate of 30 times every 2 minutes (every 4s)
-                    config.getInt(Option.MSG_RATE_LIMIT_PERIOD, 2),
-                    config.getInt(Option.MSG_RATE_LIMIT, 30)
+                        // by default, allow messages at a rate of 30 times every 2 minutes (every 4s)
+                        config.getInt(Option.MSG_RATE_LIMIT_PERIOD, 2),
+                        config.getInt(Option.MSG_RATE_LIMIT, 30)
                 ),
                 config.getInt(Option.CHANNEL_MAX_CLIENTS, 5)
         );
@@ -122,6 +113,18 @@ public final class Bytesocks implements AutoCloseable {
 
         // start server
         this.server.start();
+    }
+
+    // Bootstrap
+    public static void main(String[] args) throws Exception {
+        // setup logging
+        System.setOut(IoBuilder.forLogger(LOGGER).setLevel(Level.INFO).buildPrintStream());
+        System.setErr(IoBuilder.forLogger(LOGGER).setLevel(Level.ERROR).buildPrintStream());
+
+        // setup a new bytesocks instance
+        Configuration config = Configuration.load(Paths.get("config.json"));
+        Bytesocks bytesocks = new Bytesocks(config);
+        Runtime.getRuntime().addShutdownHook(new Thread(bytesocks::close, "Bytesocks Shutdown Thread"));
     }
 
     @Override

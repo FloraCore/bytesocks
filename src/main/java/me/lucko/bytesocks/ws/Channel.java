@@ -47,41 +47,53 @@ import javax.annotation.Nonnull;
 
 public class Channel implements WebSocket.OnConnect, WebSocket.OnMessage, WebSocket.OnClose, WebSocket.OnError {
 
-    /** Logger instance */
-    private static final Logger LOGGER = LogManager.getLogger(Channel.class);
-
     public static final Gauge CLIENTS_GAUGE = Gauge.build()
             .name("bytesocks_clients")
             .help("The number of active clients")
             .labelNames("useragent")
             .register();
-
     public static final Counter MESSAGES_COUNTER = Counter.build()
             .name("bytesocks_messages_total")
             .help("The number of messages handled")
             .labelNames("useragent")
             .register();
-
     public static final Summary MESSAGES_SIZE_SUMMARY = Summary.build()
             .name("bytesocks_messages_size_bytes")
             .help("The size of messages processed")
             .labelNames("useragent")
             .register();
-
-    /** The channel registry */
+    /**
+     * Logger instance
+     */
+    private static final Logger LOGGER = LogManager.getLogger(Channel.class);
+    /**
+     * The channel registry
+     */
     private final ChannelRegistry registry;
 
-    /** The channel id */
+    /**
+     * The channel id
+     */
     private final String id;
-    /** The ip address of the client that created the channel */
+    /**
+     * The ip address of the client that created the channel
+     */
     private final String creatorIpAddress;
-    /** The time when the channel was created */
+    /**
+     * The time when the channel was created
+     */
     private final long creationTime = System.currentTimeMillis();
-    /** A collection of connected sockets */
+    /**
+     * A collection of connected sockets
+     */
     private final Set<WebSocket> sockets = ConcurrentHashMap.newKeySet();
-    /** The rate limiter */
+    /**
+     * The rate limiter
+     */
     private final RateLimiter rateLimiter;
-    /** The max number of clients allowed to connect */
+    /**
+     * The max number of clients allowed to connect
+     */
     private final int maxClients;
 
     public Channel(ChannelRegistry registry, String id, String creatorIpAddress, RateLimiter rateLimiter, int maxClients) {
@@ -207,9 +219,9 @@ public class Channel implements WebSocket.OnConnect, WebSocket.OnMessage, WebSoc
     @Override
     public void onError(@Nonnull WebSocket ws, @Nonnull Throwable cause) {
         LOGGER.error("[ERROR]\n" +
-                "    channel id = " + this.id + "\n" +
-                "    connected count = " + this.sockets.size() + "\n" +
-                BytesocksServer.describeForLogger(ws.getContext()),
+                        "    channel id = " + this.id + "\n" +
+                        "    connected count = " + this.sockets.size() + "\n" +
+                        BytesocksServer.describeForLogger(ws.getContext()),
                 cause
         );
     }

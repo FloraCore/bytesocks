@@ -40,7 +40,9 @@ import javax.annotation.Nonnull;
 
 public class ConnectHandler implements WebSocket.Initializer {
 
-    /** Logger instance */
+    /**
+     * Logger instance
+     */
     private static final Logger LOGGER = LogManager.getLogger(ConnectHandler.class);
 
     private final ChannelRegistry channelRegistry;

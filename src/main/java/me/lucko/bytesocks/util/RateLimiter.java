@@ -35,9 +35,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Handles a rate limit
  */
 public class RateLimiter {
-    /** Rate limiter cache - allow x "actions" every x minutes */
+    /**
+     * Rate limiter cache - allow x "actions" every x minutes
+     */
     private final LoadingCache<String, AtomicInteger> rateLimiter;
-    /** The number of actions allowed in each period  */
+    /**
+     * The number of actions allowed in each period
+     */
     private final int actionsPerCycle;
 
     public RateLimiter(int periodMins, int actionsPerCycle) {
